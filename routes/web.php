@@ -44,13 +44,13 @@ Route::get('/test', function () {
     // $company = new Company();
     // $company->name = 'ClusterMX';
     // $company->save();
-    // return $company;
+    // // return $company;
 
     // $eval = new Evaluation();
     // $eval->company_id = 1;
     // $eval->name = 'Evaluacion de prueba';
     // $eval->save();
-    // return $eval;
+    // // return $eval;
 
     // $quiz = new Quiz();
     // $quiz->evaluation_id = 1;

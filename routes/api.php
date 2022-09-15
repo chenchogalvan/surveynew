@@ -32,9 +32,10 @@ Route::prefix('curp')->group(function () {
             }
         }
 
-        $searchCurp = Participant::where('curp', $arrayClean[0])->get();
-        if ($searchCurp->count() > 0) {
-            return 'La curp ya está registrada.';
+        $searchCurp = Participant::where('curp', $arrayClean[0])->first();
+        // return $searchCurp;
+        if ($searchCurp) {
+            return response($searchCurp, 200);
         }
 
         $curpModel = new Participant();
@@ -47,23 +48,18 @@ Route::prefix('curp')->group(function () {
         $curpModel->codigo_estado = $arrayClean[6];
         $curpModel->save();
 
-
-        return $curpModel;
+        return response($curpModel, 200);
     });
 
     Route::prefix('/information')->group(function () {
         Route::post('/store', function(Request $request){
-            $searchInfo = Information::where('participant_id', $request->get('participant_id'));
-            if ($searchInfo->count() > 0) {
-                return 'Ya hay información guardada para este usuario, si deseas, puedes actualizarla';
-            }
             $information                    = new Information();
             $information->participant_id    = $request->get('participant_id');
             $information->whatsapp          = $request->get('whatsapp');
             $information->telefono          = $request->get('telefono');
             $information->correo            = $request->get('correo');
             $information->save();
-            return $information;
+            return response($information, 200);
         });
 
         Route::post('/update', function(Request $request){
@@ -73,7 +69,7 @@ Route::prefix('curp')->group(function () {
             $information->telefono          = $request->get('telefono');
             $information->correo            = $request->get('correo');
             $information->save();
-            return $information;
+            return response($information, 200);
         });
     });
 
@@ -81,7 +77,7 @@ Route::prefix('curp')->group(function () {
 
     Route::get('/all', function(){
         $participants = Participant::with('information')->get();
-        return $participants;
+        return response($participants, 200);
     });
 });
 
